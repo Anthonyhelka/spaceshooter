@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class Powerup : MonoBehaviour
 {
+    private Player _player;
     [SerializeField]
     private float _speed = 3.0f;
-    private Player _player;
+    [SerializeField]
+    private int powerupID;
 
     void Start()
     {
@@ -30,7 +32,18 @@ public class Powerup : MonoBehaviour
     { 
       if (other.tag == "Player" || other.tag == "Laser")
       {
-        _player.TripleShotActive();
+        switch(powerupID)
+        {
+          case 0: 
+            _player.TripleShotActive();
+            break;
+          case 1:
+            _player.SpeedBoostActive();
+            break;
+          case 2:
+            _player.ShieldsActive();
+            break;
+        }
         Destroy(this.gameObject);
       }
     }
