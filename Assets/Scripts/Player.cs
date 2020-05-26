@@ -15,6 +15,13 @@ public class Player : MonoBehaviour
     private float _canFire = -1f;
     private SpawnManager _spawnManager;
 
+
+    // variable for is triple shot active\
+    [SerializeField]
+    private bool _tripleShotActive;
+    [SerializeField]
+    private GameObject _tripleShotPrefab;
+    
     void Start()
     {
       transform.position = new Vector3(0, 0, 0);
@@ -57,7 +64,12 @@ public class Player : MonoBehaviour
     void fireLaser()
     {
       _canFire = Time.time + _fireRate;
-      Instantiate(_laserPrefab, transform.position + new Vector3(0, 1.05f, 0), Quaternion.identity);
+      if (_tripleShotActive)
+      {
+        Instantiate(_tripleShotPrefab, transform.position, Quaternion.identity);
+      } else {
+        Instantiate(_laserPrefab, transform.position + new Vector3(0, 1.05f, 0), Quaternion.identity);
+      }
     }
 
     public void Damage()
@@ -73,5 +85,17 @@ public class Player : MonoBehaviour
       {
         Debug.Log("Lives Remaining: " + _lives);
       }
+    }
+
+    public void TripleShotActive()
+    {
+      _tripleShotActive = true;
+      StartCoroutine(TripleShotPowerDownRoutine());
+    }
+
+    IEnumerator TripleShotPowerDownRoutine()
+    {
+      yield return new WaitForSeconds(5.0f);
+      _tripleShotActive = false;
     }
 }
