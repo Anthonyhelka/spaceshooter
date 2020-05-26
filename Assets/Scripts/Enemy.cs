@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    private Player _player;
     [SerializeField]
     private float _speed = 4.0f;
 
     void Start()
     {
+      _player = GameObject.Find("Player").GetComponent<Player>();
       float randomX = Random.Range(-8f, 8f);
       transform.position = new Vector3(randomX, 8, 0);
     }
@@ -27,16 +29,19 @@ public class Enemy : MonoBehaviour
     {
       if (other.tag == "Player")
       {
-        Player player = other.transform.GetComponent<Player>();
-        if (player != null)
+        if (_player != null)
         {
-          player.Damage();
+          _player.Damage();
         }
         Destroy(this.gameObject);
       }
       else if (other.tag == "Laser")
       {
         Destroy(other.gameObject);
+        if (_player != null)
+        {
+          _player.AddScore(Random.Range(5, 12));
+        }
         Destroy(this.gameObject);
       }
     }

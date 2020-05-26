@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject _laserPrefab;
     private SpawnManager _spawnManager;
+    private Canvas _canvas;
     [SerializeField]
     private GameObject _tripleShotPrefab;
     [SerializeField]
@@ -25,14 +26,22 @@ public class Player : MonoBehaviour
     private bool _tripleShotActive = false;
     private bool _shieldsActive = false;
 
+    [SerializeField]
+    private int _score = 0;
+
     void Start()
     {
       transform.position = new Vector3(0, 0, 0);
       _anim = GetComponent<Animator>();
       _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
+      _canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
       if (_spawnManager == null)
       {
         Debug.LogError("The Spawn Manager is NULL.");
+      }
+      if (_canvas == null)
+      {
+        Debug.LogError("The Canvas is NULL.");
       }
     }
 
@@ -54,7 +63,7 @@ public class Player : MonoBehaviour
 
       transform.Translate(direction *_speed * Time.deltaTime);
 
-      transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -3.8f, 0));
+      transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -4.5f, 4.5f));
 
       if (transform.position.x >= 11.3f)
       {
@@ -100,16 +109,12 @@ public class Player : MonoBehaviour
       }
 
       _lives--;
+      _canvas.UpdateLives(_lives);
 
       if (_lives < 1)
       {
         _spawnManager.onPlayerDeath();
-        Debug.Log("Game Over!");
         Destroy(this.gameObject);
-      }
-      else
-      {
-        Debug.Log("Lives Remaining: " + _lives);
       }
     }
 
@@ -141,5 +146,11 @@ public class Player : MonoBehaviour
     {
       _shieldsActive = true;
       _shieldVisualizer.SetActive(true);
+    }
+
+    public void AddScore(int points)
+    {
+      _score += points;
+      _canvas.UpdateScore(_score);
     }
 }
