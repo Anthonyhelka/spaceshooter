@@ -6,6 +6,16 @@ public class Powerup : MonoBehaviour
 {
     [SerializeField]
     private float _speed = 3.0f;
+    private Player _player;
+
+    void Start()
+    {
+      _player = GameObject.Find("Player").GetComponent<Player>();
+      if (_player == null)
+      {
+        Debug.LogError("The Player is NULL.");
+      }
+    }
 
     void Update()
     {
@@ -17,15 +27,11 @@ public class Powerup : MonoBehaviour
     }
 
     private void OnTriggerEnter2D(Collider2D other)
-    {
-      if (other.tag == "Player")
+    { 
+      if (other.tag == "Player" || other.tag == "Laser")
       {
-        Player player = other.transform.GetComponent<Player>();
-        if (player != null)
-        {
-          player.TripleShotActive();
-          Destroy(this.gameObject);
-        }
+        _player.TripleShotActive();
+        Destroy(this.gameObject);
       }
     }
 }

@@ -14,17 +14,17 @@ public class Player : MonoBehaviour
     private float _fireRate = 0.15f;
     private float _canFire = -1f;
     private SpawnManager _spawnManager;
-
-
-    // variable for is triple shot active\
     [SerializeField]
     private bool _tripleShotActive;
     [SerializeField]
     private GameObject _tripleShotPrefab;
-    
+    [SerializeField]
+    private Animator _anim;
+
     void Start()
     {
       transform.position = new Vector3(0, 0, 0);
+      _anim = GetComponent<Animator>();
       _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
       if (_spawnManager == null)
       {
@@ -58,6 +58,19 @@ public class Player : MonoBehaviour
       else if (transform.position.x <= -11.3f)
       {
         transform.position = new Vector3(11, transform.position.y, transform.position.z);
+      }
+
+      if (horizontalInput < 0)
+      {
+        _anim.Play("Player_turn_left_anim");
+      }
+      else if (horizontalInput > 0)
+      {
+        _anim.Play("Player_turn_right_anim");
+      }
+      else
+      {
+        _anim.Play("Player_idle_anim");
       }
     }
 
