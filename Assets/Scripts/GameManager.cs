@@ -5,20 +5,18 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-  [SerializeField]
-  private bool _isGameOver = false;
+  [SerializeField] private bool _isGameOver = false;
 
   void Update()
   {
-    if (Input.GetKeyDown(KeyCode.R) && _isGameOver == true)
-    {
-      SceneManager.LoadScene(1); // Current Game Scene
-    }
+        if (Input.GetKeyDown(KeyCode.R) && _isGameOver == true)
+        {
+        SceneManager.LoadScene(1); // Current Game Scene
+        }
   }
 
   public void GameOver()
   {
-    Debug.Log("GameManager::GameOver() Called");
-    _isGameOver = true;
+        _isGameOver = true;
   }
 }

@@ -5,18 +5,16 @@ using UnityEngine;
 public class Powerup : MonoBehaviour
 {
     private Player _player;
-    [SerializeField]
-    private float _speed = 3.0f;
-    [SerializeField]
-    private int powerupID;
+    [SerializeField] private float _speed = 3.0f;
+    [SerializeField] private int powerupID;
 
     void Start()
     {
-      _player = GameObject.Find("Player").GetComponent<Player>();
-      if (_player == null)
-      {
-        Debug.LogError("The Player is NULL.");
-      }
+        _player = GameObject.Find("Player").GetComponent<Player>();
+        if (_player == null)
+        {
+            Debug.LogError("The Player is NULL.");
+        }
     }
 
     void Update()
@@ -30,21 +28,21 @@ public class Powerup : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     { 
-      if (other.tag == "Player" || other.tag == "Laser")
-      {
-        switch(powerupID)
+        if (other.tag == "Player" || other.tag == "Laser")
         {
-          case 0: 
-            _player.TripleShotActive();
-            break;
-          case 1:
-            _player.SpeedBoostActive();
-            break;
-          case 2:
-            _player.ShieldsActive();
-            break;
+            switch(powerupID)
+            {
+            case 0: 
+                _player.TripleShotActive();
+                break;
+            case 1:
+                _player.SpeedBoostActive();
+                break;
+            case 2:
+                _player.ShieldsActive();
+                break;
+            }
+            Destroy(this.gameObject);
         }
-        Destroy(this.gameObject);
-      }
     }
 }
