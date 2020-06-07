@@ -21,6 +21,8 @@ public class Player : MonoBehaviour
     private bool _tripleShotActive = false;
     private bool _shieldsActive = false;
     [SerializeField] private int _score = 0;
+    private AudioSource _audioSource;
+    [SerializeField] private AudioClip _laserSoundClip;
 
     void Start()
     {
@@ -32,6 +34,7 @@ public class Player : MonoBehaviour
         _rightEngineVisualizer.SetActive(false);
         _leftEngineVisualizer.SetActive(false);
         _canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
+        _audioSource = GetComponent<AudioSource>();
         if (_spawnManager == null)
         {
             Debug.LogError("The Spawn Manager is NULL.");
@@ -39,6 +42,10 @@ public class Player : MonoBehaviour
         if (_canvas == null)
         {
             Debug.LogError("The Canvas is NULL.");
+        }
+        if (_audioSource == null)
+        {
+            Debug.LogError("The AudioSource on player is NULL.");
         }
     }
 
@@ -94,6 +101,8 @@ public class Player : MonoBehaviour
         } else {
             Instantiate(_laserPrefab, transform.position + new Vector3(0, 1.05f, 0), Quaternion.identity);
         }
+        _audioSource.clip = _laserSoundClip;
+        _audioSource.Play();
     }
 
     public void Damage()

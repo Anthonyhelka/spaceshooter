@@ -8,6 +8,7 @@ public class Enemy : MonoBehaviour
     private BoxCollider2D _bc;
     private Animator _anim;
     [SerializeField] private float _speed = 4.0f;
+    private AudioSource _audioSource;
 
     void Start()
     {   
@@ -25,6 +26,11 @@ public class Enemy : MonoBehaviour
         if (_anim == null)
         {
             Debug.LogError("The Animator is NULL.");
+        }
+        _audioSource = GetComponent<AudioSource>();
+        if (_audioSource == null)
+        {
+            Debug.LogError("The enemy AudioSource is NULL.");
         }
         float randomX = Random.Range(-8f, 8f);
         transform.position = new Vector3(randomX, 8, 0);
@@ -46,12 +52,13 @@ public class Enemy : MonoBehaviour
         {
             _player.Damage();
             StartCoroutine(DeathRoutine());
-      }
+        }
         else if (other.tag == "Laser")
         {
             _player.AddScore(Random.Range(5, 12));
             StartCoroutine(DeathRoutine());
         }
+        _audioSource.Play();
     }
 
     IEnumerator DeathRoutine()

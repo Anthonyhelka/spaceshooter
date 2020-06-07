@@ -608,6 +608,12 @@
     <Reference Include="UnityEditor.UI">
         <HintPath>/Users/anthony/Unity_Projects/Space Shooter/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.Postprocessing.Editor">
+        <HintPath>/Users/anthony/Unity_Projects/Space Shooter/Library/ScriptAssemblies/Unity.Postprocessing.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Postprocessing.Runtime">
+        <HintPath>/Users/anthony/Unity_Projects/Space Shooter/Library/ScriptAssemblies/Unity.Postprocessing.Runtime.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
   </ItemGroup>

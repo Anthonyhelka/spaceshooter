@@ -7,6 +7,7 @@ public class Powerup : MonoBehaviour
     private Player _player;
     [SerializeField] private float _speed = 3.0f;
     [SerializeField] private int powerupID;
+    [SerializeField] private AudioClip _clip;
 
     void Start()
     {
@@ -28,6 +29,7 @@ public class Powerup : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     { 
+        AudioSource.PlayClipAtPoint(_clip, transform.position);
         if (other.tag == "Player" || other.tag == "Laser")
         {
             switch(powerupID)
